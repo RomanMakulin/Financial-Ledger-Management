@@ -55,7 +55,7 @@
 5. Поддержка интеграции с внешними банковскими API через OpenBank.
 
 ### Нефункциональные требования
-1. **Производительность:**
+1. **Производительность:** 
    - Время обработки запроса не должно превышать 300 мс при стандартной нагрузке (до 100 запросов/сек).
 2. **Надёжность:**
    - Система должна корректно восстанавливать состояние после сбоев.
@@ -106,6 +106,36 @@
 - `description` (String) — описание.
 - `next_run_date` (Timestamp) — дата следующего выполнения.
 - `interval` (Enum) — интервал: ежедневно, еженедельно, ежемесячно.
+
+---
+
+## Стек технологий
+
+### Backend
+- **Язык:** Java 17
+- **Фреймворк:** Spring Boot (Spring Data JPA, Spring Security, Spring Web, Spring Mail)
+- **Библиотеки:** MapStruct, Lombok, Hibernate Validator
+- **База данных:** PostgreSQL
+- **Миграции:** Liquibase
+- **Асинхронность:** `@Scheduled`, CompletableFuture
+- **Логирование:** Logback + SLF4J
+
+### API
+- **Формат:** RESTful API
+- **Документация:** Swagger/OpenAPI 3
+
+### Интеграции
+- **API:** OpenBank API или аналоги для синхронизации данных
+
+### DevOps
+- **Контейнеризация:** Docker
+- **CI/CD:** GitHub Actions или Jenkins
+- **Мониторинг:** Spring Boot Actuator (возможно, Prometheus/Grafana в будущем)
+
+### Тестирование
+- **Юнит-тесты:** JUnit 5
+- **Мокирование:** Mockito
+- **Интеграционные тесты:** Spring Boot Test
 
 ---
 
