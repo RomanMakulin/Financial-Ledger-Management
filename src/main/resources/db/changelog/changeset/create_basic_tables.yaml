@@ -1,0 +1,156 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Roman Makulin
+      changes:
+        - createTable:
+            tableName: account
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: balance
+                  type: DECIMAL(19, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2
+      author: Roman Makulin
+      changes:
+        - createTable:
+            tableName: category
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 3
+      author: Roman Makulin
+      changes:
+        - createTable:
+            tableName: base_transaction
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: account_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: DECIMAL(19, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+
+        - addForeignKeyConstraint:
+            baseTableName: base_transaction
+            baseColumnNames: account_id
+            constraintName: fk_base_transaction_account
+            referencedTableName: account
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: base_transaction
+            baseColumnNames: category_id
+            constraintName: fk_base_transaction_category
+            referencedTableName: category
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 4
+      author: Roman Makulin
+      changes:
+        - createTable:
+            tableName: scheduled_transaction
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: next_run_date
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: interval
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: scheduled_transaction
+            baseColumnNames: id
+            constraintName: fk_scheduled_transaction_base
+            referencedTableName: base_transaction
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 5
+      author: Roman Makulin
+      changes:
+        - createTable:
+            tableName: transaction
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: date
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: transaction
+            baseColumnNames: id
+            constraintName: fk_transaction_base
+            referencedTableName: base_transaction
+            referencedColumnNames: id
