@@ -48,4 +48,12 @@ public class Account {
      */
     @OneToMany(mappedBy = "account")
     private List<BaseTransaction> transactions = new ArrayList<>();
+
+    /**
+     * Пользователь, которому принадлежит счет.
+     */
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }
