@@ -33,7 +33,7 @@ public class Category {
     /**
      * Список транзакций для конкретной категории
      */
-    @OneToMany(mappedBy = "сategory")
+    @OneToMany(mappedBy = "category")
     private List<BaseTransaction> transactions = new ArrayList<>();
 
 }
