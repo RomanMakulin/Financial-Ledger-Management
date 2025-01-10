@@ -30,4 +30,19 @@ public class ScheduledTransaction extends BaseTransaction{
     @Column(nullable = false, name = "interval")
     private TransactionInterval interval;
 
+    public LocalDateTime getNextRunDate() {
+        return nextRunDate;
+    }
+
+    public void setNextRunDate(LocalDateTime nextRunDate) {
+        this.nextRunDate = nextRunDate;
+    }
+
+    public TransactionInterval getInterval() {
+        return interval;
+    }
+
+    public void setInterval(TransactionInterval interval) {
+        this.interval = interval;
+    }
 }

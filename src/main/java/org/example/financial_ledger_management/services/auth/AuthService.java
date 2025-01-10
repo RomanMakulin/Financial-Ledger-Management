@@ -1,21 +1,35 @@
 package org.example.financial_ledger_management.services.auth;
 
 import org.example.financial_ledger_management.model.User;
-import org.example.financial_ledger_management.repository.UserRepository;
-import org.springframework.stereotype.Service;
+import org.example.financial_ledger_management.model.dto.RegistrationUserDto;
 
-@Service
-public class AuthService {
+/**
+ * Интерфейс для аутентификации пользователей.
+ */
+public interface AuthService {
 
-    private final UserRepository userRepository;
+    /**
+     * Регистрирует нового пользователя.
+     *
+     * @param registrationUserDto данные для регистрации пользователя
+     * @return сообщение о результате регистрации
+     */
+    String registerUser(RegistrationUserDto registrationUserDto);
 
-    public AuthService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    /**
+     * Аутентифицирует пользователя.
+     *
+     * @param login логин пользователя
+     * @param password пароль пользователя
+     * @return сообщение о результате аутентификации с токеном
+     */
+    String loginUser(String login, String password);
 
-    public String registerUser(String username, String password) {
-        User user = new User(username, password);
-        return "success";
-    }
-
+    /**
+     * Возвращает аутентифицированного пользователя.
+     *
+     * @return аутентифицированный пользователь
+     */
+    User getAuthenticatedUser();
 }
+

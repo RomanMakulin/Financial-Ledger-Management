@@ -27,4 +27,11 @@ public class Transaction extends BaseTransaction{
     @Column(nullable = false)
     private LocalDateTime date;
 
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 }
