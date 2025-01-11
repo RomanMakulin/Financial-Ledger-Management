@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 public class AuthController {
 
+    /**
+     * Сервис для аутентификации пользователей.
+     */
     private final AuthService authService;
 
     /**
@@ -30,11 +33,18 @@ public class AuthController {
      * @param registrationUserDto данные для регистрации пользователя
      * @return ответ с сообщением о результате регистрации
      */
-    @PostMapping("/registration")
+    @PostMapping("/register")
     public ResponseEntity<String> registration(@RequestBody @Valid RegistrationUserDto registrationUserDto) {
         return ResponseEntity.ok(authService.registerUser(registrationUserDto));
     }
 
+    /**
+     * Аутентифицирует пользователя.
+     *
+     * @param login    логин пользователя
+     * @param password пароль пользователя
+     * @return ответ с сообщением о результате аутентификации с токеном
+     */
     @GetMapping("/login")
     public ResponseEntity<String> login(@RequestParam String login, @RequestParam String password) {
         return ResponseEntity.ok(authService.loginUser(login, password));

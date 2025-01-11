@@ -3,8 +3,10 @@ package org.example.financial_ledger_management.services.auth;
 import org.example.financial_ledger_management.model.User;
 import org.example.financial_ledger_management.model.dto.RegistrationUserDto;
 import org.example.financial_ledger_management.repository.UserRepository;
-import org.example.financial_ledger_management.services.CustomUserDetails;
+import org.example.financial_ledger_management.services.security.CustomUserDetails;
 import org.example.financial_ledger_management.utils.JwtUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +23,7 @@ import java.util.Optional;
 @Service
 public class AuthServiceImpl implements AuthService {
 
+    private static final Logger log = LoggerFactory.getLogger(AuthServiceImpl.class);
     /**
      * Репозиторий пользователей.
      */
@@ -60,10 +63,12 @@ public class AuthServiceImpl implements AuthService {
     public String registerUser(RegistrationUserDto registrationUserDto) {
 
         if (userRepository.existsByLogin(registrationUserDto.getLogin())) {
+            log.error("User with login {} already exists", registrationUserDto.getLogin());
             return "user with this login already exists";
         }
 
         User newUser = createUser(registrationUserDto);
+        log.info("New user created: {}", newUser);
         return "User registered successfully: " + newUser;
     }
 
@@ -75,11 +80,13 @@ public class AuthServiceImpl implements AuthService {
      * @return сообщение о результате аутентификации
      */
     @Override
+    @Transactional
     public String loginUser(String login, String password) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(login, password)
         );
         String token = jwtUtils.generateToken(authentication.getName());
+        log.info("Login {} successful", login);
         return "Login successful! Token: " + token;
     }
 

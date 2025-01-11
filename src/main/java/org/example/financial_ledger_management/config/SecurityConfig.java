@@ -1,6 +1,6 @@
 package org.example.financial_ledger_management.config;
 
-import org.example.financial_ledger_management.services.CustomUserDetailsService;
+import org.example.financial_ledger_management.services.security.CustomUserDetailsService;
 import org.example.financial_ledger_management.utils.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

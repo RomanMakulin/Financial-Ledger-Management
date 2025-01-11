@@ -1,7 +1,7 @@
 package org.example.financial_ledger_management.utils;
 
 import jakarta.servlet.ServletException;
-import org.example.financial_ledger_management.services.CustomUserDetailsService;
+import org.example.financial_ledger_management.services.security.CustomUserDetailsService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;

@@ -1,4 +1,4 @@
-package org.example.financial_ledger_management.services;
+package org.example.financial_ledger_management.services.security;
 
 import org.example.financial_ledger_management.model.User;
 import org.example.financial_ledger_management.repository.UserRepository;
