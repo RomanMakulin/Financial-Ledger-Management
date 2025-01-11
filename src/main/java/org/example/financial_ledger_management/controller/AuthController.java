@@ -45,7 +45,7 @@ public class AuthController {
      * @param password пароль пользователя
      * @return ответ с сообщением о результате аутентификации с токеном
      */
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam String login, @RequestParam String password) {
         return ResponseEntity.ok(authService.loginUser(login, password));
     }
