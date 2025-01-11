@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
  * Контроллер для аутентификации пользователей.
  */
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
 
     /**
