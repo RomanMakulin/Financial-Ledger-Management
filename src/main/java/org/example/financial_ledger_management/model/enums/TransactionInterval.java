@@ -1,11 +1,10 @@
-package org.example.financial_ledger_management.model.transaction;
+package org.example.financial_ledger_management.model.enums;
 
 import lombok.Getter;
 
 /**
  * Интервалы транзакций
  */
-@Getter
 public enum TransactionInterval {
 
     EVERY_DAY("Каждый день"),
@@ -18,4 +17,7 @@ public enum TransactionInterval {
         this.description = description;
     }
 
+    public String getDescription() {
+        return description;
+    }
 }

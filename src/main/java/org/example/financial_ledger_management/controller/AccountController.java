@@ -1,36 +1,66 @@
 package org.example.financial_ledger_management.controller;
 
+import jakarta.validation.Valid;
 import org.example.financial_ledger_management.model.Account;
+import org.example.financial_ledger_management.model.dto.AddNewAccount;
+import org.example.financial_ledger_management.model.dto.UpdateAccountDto;
+import org.example.financial_ledger_management.services.AccountService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * Контроллер для работы с счетами
+ */
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
 
+    private final AccountService accountService;
+
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
+    }
+
     /**
-     * /accounts: Получить список всех счетов.
+     * Получить список всех счетов.
      * @return Список счетов.
      */
     @GetMapping
-    public String accounts() {
-        // TODO
-        return "accounts";
+    public ResponseEntity<List<Account>> accounts() {
+        return ResponseEntity.ok(accountService.getAllAccounts());
     }
 
+    /**
+     * Добавить счет.
+     * @param account Счет.
+     * @return информация о результате запроса
+     */
     @PostMapping
-    public String addAccount(@RequestBody Account account) {
-        // TODO
-        return "Account added";
+    public ResponseEntity<Account> addAccount(@RequestBody @Valid AddNewAccount account) {
+        return ResponseEntity.ok(accountService.addAccount(account));
     }
 
-    @PutMapping("/{id}")
-    public String updateAccount(@PathVariable int id, @RequestBody Account account) {
+    /**
+     * Обновить счет.
+     * @param account счет для обновления.
+     * @return информация о результате запроса
+     */
+    @PutMapping("/update")
+    public Account updateAccount(@RequestBody UpdateAccountDto account) {
         // TODO
         return "Account updated";
     }
 
+    /**
+     * /accounts: Удалить счет.
+     * @param id Идентификатор счета.
+     * @return информация о результате запроса
+     */
     @DeleteMapping("/{id}")
-    public String deleteAccount(@PathVariable int id) {
+    public String deleteAccount(@PathVariable UUID id) {
         // TODO
         return "Account deleted";
     }

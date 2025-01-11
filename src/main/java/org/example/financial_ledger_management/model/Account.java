@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.financial_ledger_management.model.enums.Currency;
 import org.example.financial_ledger_management.model.transaction.BaseTransaction;
 
 import java.math.BigDecimal;
@@ -41,7 +42,7 @@ public class Account {
      * Валюта счета.
      */
     @Column(name = "currency", nullable = false)
-    private String currency;
+    private Currency currency;
 
     /**
      * Список транзакций, связанных со счетом.
@@ -80,11 +81,11 @@ public class Account {
         this.balance = balance;
     }
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 

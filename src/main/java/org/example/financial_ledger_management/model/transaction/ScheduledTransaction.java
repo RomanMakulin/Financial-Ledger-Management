@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
+import org.example.financial_ledger_management.model.enums.TransactionInterval;
 
 import java.time.LocalDateTime;
 

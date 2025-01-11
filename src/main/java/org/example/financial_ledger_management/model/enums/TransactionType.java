@@ -1,11 +1,10 @@
-package org.example.financial_ledger_management.model.transaction;
+package org.example.financial_ledger_management.model.enums;
 
 import lombok.Getter;
 
 /**
  * Тип транзакции
  */
-@Getter
 public enum TransactionType {
     INCREASE("Доход"),
     DECREASE("Расход");
@@ -16,4 +15,7 @@ public enum TransactionType {
         this.description = description;
     }
 
+    public String getDescription() {
+        return description;
+    }
 }

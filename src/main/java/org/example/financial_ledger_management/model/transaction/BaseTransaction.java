@@ -6,10 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.financial_ledger_management.model.Account;
 import org.example.financial_ledger_management.model.Category;
-import org.springframework.context.annotation.Description;
+import org.example.financial_ledger_management.model.enums.TransactionType;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
