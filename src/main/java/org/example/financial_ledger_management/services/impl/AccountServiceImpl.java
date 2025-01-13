@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -80,9 +79,21 @@ public class AccountServiceImpl implements AccountService {
         return accountForUpdate;
     }
 
+    /**
+     * Удаляет счет по его идентификатору
+     *
+     * @param id идентификатор счета
+     * @return сообщение об успешном удалении
+     */
     @Override
     public String deleteAccount(UUID id) {
-        return null;
+        if (accountRepository.existsAccountById(id)) {
+            accountRepository.deleteById(id);
+            log.info("Account with id: {} successfully deleted", id);
+            return "Account with id: " + id + " successfully deleted";
+        }
+        log.info("Account with id: {} not found for deletion", id);
+        return "Account with id: " + id + " not found for deletion";
     }
 
     /**

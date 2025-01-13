@@ -54,14 +54,13 @@ public class AccountController {
     }
 
     /**
-     * /accounts: Удалить счет.
+     * Удалить счет.
      * @param id Идентификатор счета.
      * @return информация о результате запроса
      */
     @DeleteMapping("/{id}")
-    public String deleteAccount(@PathVariable UUID id) {
-        // TODO
-        return null;
+    public ResponseEntity<String> deleteAccount(@PathVariable @Valid UUID id) {
+        return ResponseEntity.ok(accountService.deleteAccount(id));
     }
 
 }

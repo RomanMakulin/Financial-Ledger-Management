@@ -21,4 +21,11 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
      * @return счет
      */
     Optional<Account> findAccountByUserAndId(User user, UUID id);
+
+    /**
+     * Проверить существование счета по идентификатору
+     * @param id уникальный идентификатор счета
+     * @return true если счет существует
+     */
+    boolean existsAccountById(UUID id);
 }
