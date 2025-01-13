@@ -1,5 +1,6 @@
 package org.example.financial_ledger_management.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -70,6 +71,7 @@ public class User {
      * Список счетов пользователя.
      */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Account> accounts;
 
     public UUID getId() {

@@ -42,6 +42,7 @@ public class Account {
      * Валюта счета.
      */
     @Column(name = "currency", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Currency currency;
 
     /**

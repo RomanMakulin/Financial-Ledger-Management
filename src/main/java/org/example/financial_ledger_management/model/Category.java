@@ -14,7 +14,7 @@ import java.util.UUID;
  * Категория транзакций
  */
 @Entity
-@Table(name = "сategory")
+@Table(name = "category")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

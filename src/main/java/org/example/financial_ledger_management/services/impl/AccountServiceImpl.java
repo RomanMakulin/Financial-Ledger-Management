@@ -1,6 +1,7 @@
 package org.example.financial_ledger_management.services.impl;
 
 import org.example.financial_ledger_management.model.Account;
+import org.example.financial_ledger_management.model.User;
 import org.example.financial_ledger_management.model.dto.AddNewAccount;
 import org.example.financial_ledger_management.model.dto.UpdateAccountDto;
 import org.example.financial_ledger_management.repository.AccountRepository;
@@ -9,9 +10,11 @@ import org.example.financial_ledger_management.services.auth.AuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -39,6 +42,7 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * Возвращает все счета
+     *
      * @return список счетов
      */
     @Override
@@ -48,17 +52,32 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * Создает новый счет
+     *
      * @param accountInfo счет для добавления (информация заданная пользователем)
      * @return созданный счет
      */
     @Override
+    @Transactional
     public Account addAccount(AddNewAccount accountInfo) {
         return createAccount(accountInfo);
     }
 
+    /**
+     * Обновляет счет по его идентификатору и авторизованному пользователю
+     * @param accountInfo данные для обновления счета
+     * @return обновленный счет
+     */
     @Override
-    public Account updateAccount(UpdateAccountDto account) {
-        return null;
+    @Transactional
+    public Account updateAccount(UpdateAccountDto accountInfo) {
+        User curentUser = authService.getAuthenticatedUser();
+        Account accountForUpdate = getAccountByIdAndUser(accountInfo.getAccountId(), curentUser);
+
+        accountForUpdate.setName(accountInfo.getName());
+        accountRepository.save(accountForUpdate);
+        log.info("Account updated. Name: {}, Account id: {}", accountForUpdate.getName(), accountForUpdate.getId());
+
+        return accountForUpdate;
     }
 
     @Override
@@ -68,6 +87,7 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * Создает новый счет
+     *
      * @param accountInfo информация о новом счете от пользователя
      * @return созданный счет
      */
@@ -80,6 +100,29 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.save(newAccount);
         log.info("New account created. Name: {}", newAccount.getName());
         return newAccount;
+    }
+
+    /**
+     * Проверяет корректность введенных данных для обновления счета
+     * @param accountInfo данные для обновления счета
+     */
+    @Deprecated // теперь используем валидацию в контроллере на принимаемом body
+    private void checkUpdateAccountDto(UpdateAccountDto accountInfo) {
+        if (accountInfo.getAccountId() == null || accountInfo.getName() == null || accountInfo.getName().isEmpty()) {
+            log.error("Invalid account information for update!");
+            throw new IllegalArgumentException("Invalid account information for update!");
+        }
+    }
+
+    /**
+     * Получает счет по его идентификатору юзера и идентификатору счета
+     * @param accountId идентификатор счета
+     * @param user юзер
+     * @return счет
+     */
+    private Account getAccountByIdAndUser(UUID accountId, User user) {
+        return accountRepository.findAccountByUserAndId(user, accountId)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found!"));
     }
 
 }

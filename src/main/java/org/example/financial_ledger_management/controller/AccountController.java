@@ -49,9 +49,8 @@ public class AccountController {
      * @return информация о результате запроса
      */
     @PutMapping("/update")
-    public Account updateAccount(@RequestBody UpdateAccountDto account) {
-        // TODO
-        return "Account updated";
+    public ResponseEntity<Account> updateAccount(@RequestBody @Valid UpdateAccountDto account) {
+        return ResponseEntity.ok(accountService.updateAccount(account)); // TODO доделаьть
     }
 
     /**
@@ -62,7 +61,7 @@ public class AccountController {
     @DeleteMapping("/{id}")
     public String deleteAccount(@PathVariable UUID id) {
         // TODO
-        return "Account deleted";
+        return null;
     }
 
 }
