@@ -2,7 +2,7 @@ package org.example.financial_ledger_management.controller;
 
 import jakarta.validation.Valid;
 import org.example.financial_ledger_management.model.Account;
-import org.example.financial_ledger_management.model.dto.AddNewAccount;
+import org.example.financial_ledger_management.model.dto.AddNewAccountDto;
 import org.example.financial_ledger_management.model.dto.UpdateAccountDto;
 import org.example.financial_ledger_management.services.AccountService;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +39,7 @@ public class AccountController {
      * @return информация о результате запроса
      */
     @PostMapping
-    public ResponseEntity<Account> addAccount(@RequestBody @Valid AddNewAccount account) {
+    public ResponseEntity<Account> addAccount(@RequestBody @Valid AddNewAccountDto account) {
         return ResponseEntity.ok(accountService.addAccount(account));
     }
 
@@ -50,7 +50,7 @@ public class AccountController {
      */
     @PutMapping("/update")
     public ResponseEntity<Account> updateAccount(@RequestBody @Valid UpdateAccountDto account) {
-        return ResponseEntity.ok(accountService.updateAccount(account)); // TODO доделаьть
+        return ResponseEntity.ok(accountService.updateAccount(account));
     }
 
     /**

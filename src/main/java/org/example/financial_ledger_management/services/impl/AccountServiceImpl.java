@@ -2,7 +2,7 @@ package org.example.financial_ledger_management.services.impl;
 
 import org.example.financial_ledger_management.model.Account;
 import org.example.financial_ledger_management.model.User;
-import org.example.financial_ledger_management.model.dto.AddNewAccount;
+import org.example.financial_ledger_management.model.dto.AddNewAccountDto;
 import org.example.financial_ledger_management.model.dto.UpdateAccountDto;
 import org.example.financial_ledger_management.repository.AccountRepository;
 import org.example.financial_ledger_management.services.AccountService;
@@ -57,7 +57,7 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     @Transactional
-    public Account addAccount(AddNewAccount accountInfo) {
+    public Account addAccount(AddNewAccountDto accountInfo) {
         return createAccount(accountInfo);
     }
 
@@ -102,7 +102,7 @@ public class AccountServiceImpl implements AccountService {
      * @param accountInfo информация о новом счете от пользователя
      * @return созданный счет
      */
-    private Account createAccount(AddNewAccount accountInfo) {
+    private Account createAccount(AddNewAccountDto accountInfo) {
         Account newAccount = new Account();
         newAccount.setName(accountInfo.getName());
         newAccount.setCurrency(accountInfo.getCurrency());
