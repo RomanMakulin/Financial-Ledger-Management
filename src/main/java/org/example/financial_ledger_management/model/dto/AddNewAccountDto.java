@@ -1,12 +1,9 @@
 package org.example.financial_ledger_management.model.dto;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import org.example.financial_ledger_management.model.enums.Currency;
 
-import java.math.BigDecimal;
-
-public class AddNewAccount {
+public class AddNewAccountDto {
 
     /**
      * Имя счета.
