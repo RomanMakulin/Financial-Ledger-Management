@@ -1,7 +1,7 @@
 package org.example.financial_ledger_management.services;
 
 import org.example.financial_ledger_management.model.Account;
-import org.example.financial_ledger_management.model.dto.AddNewAccount;
+import org.example.financial_ledger_management.model.dto.AddNewAccountDto;
 import org.example.financial_ledger_management.model.dto.UpdateAccountDto;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public interface AccountService {
      * @param account счет для добавления
      * @return сообщение о результате добавления
      */
-    Account addAccount(AddNewAccount account);
+    Account addAccount(AddNewAccountDto account);
 
     /**
      * Обновляет существующий счет.
