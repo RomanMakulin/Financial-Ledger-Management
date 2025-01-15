@@ -1,6 +1,10 @@
 package org.example.financial_ledger_management.model.dto;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
+import org.example.financial_ledger_management.model.Category;
+import org.example.financial_ledger_management.model.enums.TransactionType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,10 +19,12 @@ public class CreateTransactionDto {
     private UUID accountId;
 
     @NotNull(message = "Необходимо указать категорию")
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     @NotNull(message = "Необходимо указать тип транзакции")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
 
     @NotNull(message = "Необходимо указать сумму")
     private BigDecimal amount;
@@ -29,7 +35,6 @@ public class CreateTransactionDto {
 
     // Getters and setters
 
-
     public UUID getAccountId() {
         return accountId;
     }
@@ -38,19 +43,19 @@ public class CreateTransactionDto {
         this.accountId = accountId;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
-    public String getType() {
+    public TransactionType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 

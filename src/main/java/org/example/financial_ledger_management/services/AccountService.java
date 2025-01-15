@@ -1,6 +1,7 @@
 package org.example.financial_ledger_management.services;
 
 import org.example.financial_ledger_management.model.Account;
+import org.example.financial_ledger_management.model.User;
 import org.example.financial_ledger_management.model.dto.AddNewAccountDto;
 import org.example.financial_ledger_management.model.dto.UpdateAccountDto;
 
@@ -42,6 +43,14 @@ public interface AccountService {
      * @return сообщение о результате удаления
      */
     String deleteAccount(UUID id);
+
+    /**
+     * Возвращает счет по идентификатору.
+     *
+     * @param accountId идентификатор счета
+     * @return счет
+     */
+    Account getAccountById(UUID accountId);
 
 }
 

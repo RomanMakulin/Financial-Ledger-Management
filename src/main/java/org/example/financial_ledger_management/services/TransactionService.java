@@ -13,13 +13,23 @@ import java.util.UUID;
 public interface TransactionService {
 
     /**
-     * Возвращает все транзакции
+     * Возвращает все транзакции со всех счетов
+     *
      * @return транзакции
      */
-    List<Transaction> getTransactions();
+    List<Transaction> getAllTransactions();
+
+    /**
+     * Возвращает все транзакции по конкретному счету
+     *
+     * @param accountId - id счета
+     * @return транзакции
+     */
+    List<Transaction> getAllTransactionsByAccountId(UUID accountId);
 
     /**
      * Создает транзакцию
+     *
      * @param createTransactionDto - данные транзакции
      * @return транзакция
      */
@@ -27,6 +37,7 @@ public interface TransactionService {
 
     /**
      * Обновляет транзакцию
+     *
      * @param updateTransactionDto - данные транзакции
      * @return транзакция
      */
@@ -34,6 +45,7 @@ public interface TransactionService {
 
     /**
      * Удаляет транзакцию
+     *
      * @param id - идентификатор транзакции
      * @return транзакция
      */

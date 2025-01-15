@@ -27,18 +27,35 @@ public class TransactionController {
     }
 
     /**
-     * Получение всех транзакций
+     * Получение всех транзакций со всех счетов у авторизованного пользователя
+     *
      * @return список транзакций
      */
     @GetMapping
-    public ResponseEntity<List<Transaction>> getTransaction() {
-        return ResponseEntity.ok(transactionService.getTransactions());
+    public ResponseEntity<List<Transaction>> getAllTransaction() {
+        return ResponseEntity.ok(transactionService.getAllTransactions());
     }
 
+    /**
+     * Получение транзакций по id счета у авторизованного пользователя
+     *
+     * @param accountId идентификатор счета
+     * @return транзакции
+     */
+    @GetMapping("/{accountId}")
+    public ResponseEntity<List<Transaction>> getTransactionByAccountId(@PathVariable("accountId") UUID accountId) {
+        return ResponseEntity.ok(transactionService.getAllTransactionsByAccountId(accountId));
+    }
+
+    /**
+     * Создание транзакции
+     *
+     * @param createTransactionDto полученный объект транзакции
+     * @return созданная транзакция
+     */
     @PostMapping
     public ResponseEntity<Transaction> createTransaction(@RequestBody CreateTransactionDto createTransactionDto) {
-        // TODO
-        return null;
+        return ResponseEntity.ok(transactionService.createTransaction(createTransactionDto));
     }
 
     @PutMapping()

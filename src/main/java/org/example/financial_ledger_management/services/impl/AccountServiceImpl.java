@@ -63,6 +63,7 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * Обновляет счет по его идентификатору и авторизованному пользователю
+     *
      * @param accountInfo данные для обновления счета
      * @return обновленный счет
      */
@@ -115,6 +116,7 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * Проверяет корректность введенных данных для обновления счета
+     *
      * @param accountInfo данные для обновления счета
      */
     @Deprecated // теперь используем валидацию в контроллере на принимаемом body
@@ -127,13 +129,27 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * Получает счет по его идентификатору юзера и идентификатору счета
+     *
      * @param accountId идентификатор счета
-     * @param user юзер
+     * @param user      юзер
      * @return счет
      */
     private Account getAccountByIdAndUser(UUID accountId, User user) {
         return accountRepository.findAccountByUserAndId(user, accountId)
                 .orElseThrow(() -> new IllegalArgumentException("Account not found!"));
     }
+
+    /**
+     * Получает счет по его идентификатору у авторизованного пользователя
+     *
+     * @param accountId идентификатор счета
+     * @return счет
+     */
+    @Override
+    public Account getAccountById(UUID accountId) {
+        return accountRepository.findAccountByUserAndId(authService.getAuthenticatedUser(), accountId)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found!"));
+    }
+
 
 }
