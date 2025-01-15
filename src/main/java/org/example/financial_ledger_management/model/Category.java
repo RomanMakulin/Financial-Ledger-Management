@@ -1,5 +1,6 @@
 package org.example.financial_ledger_management.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,6 +35,7 @@ public class Category {
      * Список транзакций для конкретной категории
      */
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private List<BaseTransaction> transactions = new ArrayList<>();
 
     public UUID getId() {
