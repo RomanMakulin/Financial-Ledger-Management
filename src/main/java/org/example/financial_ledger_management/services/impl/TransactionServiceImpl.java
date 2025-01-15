@@ -1,11 +1,13 @@
 package org.example.financial_ledger_management.services.impl;
 
 import org.example.financial_ledger_management.model.Account;
+import org.example.financial_ledger_management.model.Category;
 import org.example.financial_ledger_management.model.dto.CreateTransactionDto;
 import org.example.financial_ledger_management.model.dto.UpdateTransactionDto;
 import org.example.financial_ledger_management.model.transaction.Transaction;
 import org.example.financial_ledger_management.repository.TransactionRepository;
 import org.example.financial_ledger_management.services.AccountService;
+import org.example.financial_ledger_management.services.CategoryService;
 import org.example.financial_ledger_management.services.TransactionService;
 import org.example.financial_ledger_management.services.auth.AuthService;
 import org.slf4j.Logger;
@@ -40,12 +42,16 @@ public class TransactionServiceImpl implements TransactionService {
      */
     private final AuthService authService;
 
+    private final CategoryService categoryService;
+
     public TransactionServiceImpl(TransactionRepository transactionRepository,
                                   AccountService accountService,
-                                  AuthService authService) {
+                                  AuthService authService,
+                                  CategoryService categoryService) {
         this.transactionRepository = transactionRepository;
         this.accountService = accountService;
         this.authService = authService;
+        this.categoryService = categoryService;
     }
 
     /**
@@ -84,10 +90,11 @@ public class TransactionServiceImpl implements TransactionService {
     public Transaction createTransaction(CreateTransactionDto createTransactionDto) {
 
         Account account = accountService.getAccountById(createTransactionDto.getAccountId());
+        Category category = categoryService.getCategoryByNameOrCreateNew(createTransactionDto.getCategory());
 
         Transaction transaction = new Transaction();
         transaction.setDate(LocalDateTime.now());
-        transaction.setCategory(createTransactionDto.getCategory());
+        transaction.setCategory(category);
         transaction.setType(createTransactionDto.getType());
         transaction.setAmount(createTransactionDto.getAmount());
         transaction.setAccount(account);

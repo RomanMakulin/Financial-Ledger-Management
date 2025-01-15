@@ -19,8 +19,7 @@ public class CreateTransactionDto {
     private UUID accountId;
 
     @NotNull(message = "Необходимо указать категорию")
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    private String category;
 
     @NotNull(message = "Необходимо указать тип транзакции")
     @Enumerated(EnumType.STRING)
@@ -43,11 +42,11 @@ public class CreateTransactionDto {
         this.accountId = accountId;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
