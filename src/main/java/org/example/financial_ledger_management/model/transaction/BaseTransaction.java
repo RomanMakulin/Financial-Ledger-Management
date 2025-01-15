@@ -28,7 +28,7 @@ public abstract class BaseTransaction {
     /**
      * Счет, к которому относится транзакция
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 

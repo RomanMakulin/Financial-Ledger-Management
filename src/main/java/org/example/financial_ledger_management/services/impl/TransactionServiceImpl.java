@@ -4,6 +4,7 @@ import org.example.financial_ledger_management.model.Account;
 import org.example.financial_ledger_management.model.Category;
 import org.example.financial_ledger_management.model.dto.CreateTransactionDto;
 import org.example.financial_ledger_management.model.dto.UpdateTransactionDto;
+import org.example.financial_ledger_management.model.enums.TransactionType;
 import org.example.financial_ledger_management.model.transaction.Transaction;
 import org.example.financial_ledger_management.repository.TransactionRepository;
 import org.example.financial_ledger_management.services.AccountService;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -90,6 +92,8 @@ public class TransactionServiceImpl implements TransactionService {
     public Transaction createTransaction(CreateTransactionDto createTransactionDto) {
 
         Account account = accountService.getAccountById(createTransactionDto.getAccountId());
+        validateTransaction(createTransactionDto.getAmount(), account.getBalance(), createTransactionDto.getType());
+
         Category category = categoryService.getCategoryByNameOrCreateNew(createTransactionDto.getCategory());
 
         Transaction transaction = new Transaction();
@@ -100,9 +104,48 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setAccount(account);
         Optional.ofNullable(createTransactionDto.getDescription()).ifPresent(transaction::setDescription);
 
+        updateAccountBalance(transaction, account);
+
         log.info("createTransaction called. Saving transaction: {}", transaction);
         return transactionRepository.save(transaction);
     }
+
+    /**
+     * Обновляет баланс счета
+     *
+     * @param transaction - транзакция
+     * @param account - счет
+     */
+    private void updateAccountBalance(Transaction transaction, Account account) {
+        if (transaction.getType() == TransactionType.INCREASE) {
+            account.setBalance(account.getBalance().add(transaction.getAmount()));
+        } else if (transaction.getType() == TransactionType.DECREASE) {
+            account.setBalance(account.getBalance().subtract(transaction.getAmount()));
+        }
+    }
+
+    /**
+     * Валидация транзакции на отрицательную сумму и сумму превышающую баланс счета при снятии
+     *
+     * @param transactionAmount - сумма транзакции
+     * @param accountBalance - баланс счета
+     * @param transactionType - тип транзакции
+     */
+    private void validateTransaction(BigDecimal transactionAmount, BigDecimal accountBalance, TransactionType transactionType) {
+        if (transactionAmount == null || accountBalance == null || transactionType == null) {
+            throw new IllegalArgumentException("Transaction amount, account balance, and transaction type cannot be null");
+        }
+
+        if (transactionType == TransactionType.DECREASE && transactionAmount.compareTo(accountBalance) > 0) {
+            throw new IllegalArgumentException("Transaction amount is greater than account balance");
+        }
+
+        if (transactionAmount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Transaction amount must be greater than zero");
+        }
+    }
+
+
 
     @Override
     public Transaction updateTransaction(UpdateTransactionDto updateTransactionDto) {
